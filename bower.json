@@ -1,0 +1,17 @@
+{
+  "name": "polymer-admin",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.1.0",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.6",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.6",
+    "polymer-apigility": "git@github.com:visa4/polymer-apigility.git#develop  ",
+    "page": "page.js#~1.7.1",
+    "paper-datatable": "~0.9.8",
+    "vaadin-grid": "~1.0.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "*",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0"
+  }
+}

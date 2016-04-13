@@ -1,0 +1,73 @@
+<script src="../../bower_components/page/page.js"></script>
+<script>
+
+  window.addEventListener('WebComponentsReady', function() {
+
+    function scrollToTop(ctx, next) {
+      app.scrollPageToTop();
+      next();
+    }
+
+    /**
+     * Home
+     */
+    page('/', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'home');
+      app.route = ctx.routeName = 'dashboard';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * List user
+     */
+    page('/user', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'users');
+      app.route = ctx.routeName =  'users';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * User
+     */
+    page('/user/:userId', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'user');
+      app.route = ctx.routeName =  'user';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * List places
+     */
+    page('/place', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'places');
+      app.route = ctx.routeName =  'places';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Place
+     */
+    page('/place/:placeId', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'place');
+      app.route = ctx.routeName =  'place';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    page('*', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'not-found');
+      app.route = ctx.routeName =  'not-found';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    // add #! before urls
+    page({
+      hashbang: false
+    });
+  });
+</script>

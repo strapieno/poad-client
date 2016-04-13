@@ -1,0 +1,198 @@
+<link rel="import" href="../routing.html">
+<link rel="import" href="../formatter-behavior.html">
+
+<dom-module id="strapieno-router">
+  <template>
+    <style>
+      iron-pages {
+        padding: 24px 16px 56px;
+        min-height: 100%;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 640px) {
+        iron-pages {
+          padding: 24px 36px 56px;
+        }
+      }
+    </style>
+
+    <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+      <section data-route="dashboard">
+        <h1>test</h1>
+        <span>home</span>
+      </section>
+      <!-- List user -->
+      <section data-route="users">
+        <apigility-rest
+                service-name="rest/user"
+                collection-name="users"
+                collection="{{users}}"
+                page-count="{{usersPages}}"
+                page-size="[[userPageSize]]"
+                page="[[userPage]]"
+                auth="{{auth}}"
+                load-collection="{{loadUserCollection}}">
+        </apigility-rest>
+        <paper-datatable data="{{users}}">
+          <paper-datatable-column header="Username" property="user_name" type="String" sortable></paper-datatable-column>
+          <paper-datatable-column header="Email" property="email" type="String" sortable></paper-datatable-column>
+          <paper-datatable-column header="Data create" property="date_created" type="date" sortable></paper-datatable-column>
+          <paper-datatable-column property="id" type="String">
+            <template>
+              <a href="http://localhost:5000/user/{{value}}">
+                <paper-icon-button icon="datatable:editable"></paper-icon-button>
+              </a>
+            </template>
+          </paper-datatable-column>
+        </paper-datatable>
+
+        <rest-pagination
+          page-count="{{usersPages}}"
+          page="{{userPage}}"
+          page-size="{{userPageSize}}">
+        </rest-pagination>
+      </section>
+      <!-- User -->
+      <section data-route="user">
+        <form
+          is="apigility-rest-form"
+          service-name="rest/user"
+          identify="{{userId}}"
+          auth="{{auth}}">
+          <paper-input name="user_name" label="Username"></paper-input>
+          <paper-input name="email" label="Email"></paper-input>
+          <paper-input name="first_name" label="First name"></paper-input>
+          <paper-input name="last_name" label="Last name"></paper-input>
+          <input type="submit" value="Save"/>
+        </form>
+      </section>
+      <!-- List place -->
+      <section data-route="places">
+        fsdfsdfasdf
+        <apigility-rest
+          service-name="rest/nightclub"
+          collection-name="nightclubs"
+          collection="{{nightclubs}}"
+          page-count="{{nightclubPages}}"
+          page-size="[[nightclubPageSize]]"
+          page="[[nightclubPage]]"
+          auth="{{auth}}"
+          load-collection="{{loadPlaceCollection}}">
+        </apigility-rest>
+        <table class="paper-datatable">
+          <tbody class="paper-datatable">
+          <template is="dom-repeat" items="{{nightclubs}}" as="nightclub" >
+            <tr class="paper-datatable">
+              <td class="paper-datatable">
+                <a href="http://localhost:5000/place/{{nightclub.id}}">
+                 <span>{{nightclub.name}}</span>
+                </a>
+              </td>
+            </tr>
+          </template>
+          </tbody>
+        </table>
+        <rest-pagination
+          page-count="{{nightclubPages}}"
+          page="{{nightclubPage}}"
+          page-size="{{nightclubPageSize}}">
+        </rest-pagination>
+      </section>
+      <!-- Place -->
+      <section data-route="place">
+        <form
+          is="apigility-rest-form"
+          service-name="rest/nightclub"
+          identify="{{placeId}}"
+          auth="{{auth}}">
+          <input type="submit" value="Save"/>
+        </form>
+
+      </section>
+
+      <section data-route="not-found">
+       not found
+      </section>
+
+    </iron-pages>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'strapieno-router',
+
+        properties: {
+          entityId: {
+            type: String,
+            value: null
+          },
+
+          auth: {
+            type: Object,
+            value: null
+          },
+
+          route: {
+            type: String
+          },
+
+          routeParams: {
+            type: Object,
+            value: function () {return {};},
+            observer: '_routeParamsChanged'
+          },
+
+          loadUserCollection: {
+            type: Boolean,
+            value: false
+          },
+
+          userId: {
+            type: String
+          },
+
+          loadPlaceCollection: {
+            type: Boolean,
+            value: false
+          },
+
+          placeId: {
+            type: String
+          }
+        },
+
+        _routeParamsChanged:  function (value) {
+          switch(value.routeName) {
+            case 'dashboard':
+              console.log('dashboard bl');
+              break;
+            case 'users':
+              console.log('Users bl');
+              this.loadUserCollection = true;
+              break;
+            case 'user':
+              console.log('User bl');
+              this.userId = value.params.userId;
+              break;
+            case 'places':
+              console.log('place bl');
+              this.loadPlaceCollection = true;
+              break;
+            case 'place':
+              console.log('place bl');
+              this.placeId = value.params.placeId;
+              break;
+            default:
+              break;
+          }
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

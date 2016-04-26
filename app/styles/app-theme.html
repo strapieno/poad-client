@@ -169,11 +169,12 @@
    */
   /* mobile-small */
   @media (min-width: 640px) {
-    .collapsed-menu::shadow #main {
-      left: 62px !important;
+
+    #paperDrawerPanel.collapsed-menu::shadow > iron-selector > #main {
+       left: 62px !important;
     }
 
-    .collapsed-menu::shadow #drawer {
+    #paperDrawerPanel.collapsed-menu::shadow > iron-selector > #drawer {
       width: 62px !important;
       -webkit-transform: translateX(0);
       transform: translateX(0);

@@ -5,7 +5,6 @@
     <link rel="import" href="/elements/elements.html">
     <link rel="stylesheet" href="/styles/style.css">
     <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
-    <link rel="import" href="../bower_components/app-router/app-router.html">
 </head>
 <body>
 
@@ -45,19 +44,28 @@
             <paper-toolbar>
                 <paper-icon-button icon="menu" on-tap="toggleMenu"></paper-icon-button>
                 <div class="flex"></div>
-                <strapieno-user-avatar user="{{identityObject}}" height="40" width="40" sizing="cover" placeholder="/images/avatar35x35.png"></strapieno-user-avatar>
+                <strapieno-user-avatar id="logged-avatar" on-tap="toggleRightMenu" user="{{identityObject}}" height="38" width="38" sizing="cover" placeholder="/images/avatar35x35.png"></strapieno-user-avatar>
             </paper-toolbar>
-            <paper-drawer-panel id="paperDrawerPanel" narrow="drawer">
+            <paper-drawer-panel id="rightPanel" drawer-width="64px" force-narrow right-drawer>
                 <paper-scroll-header-panel drawer>
-                    <strapieno-menu route="{{route}}" ></strapieno-menu>
+                    <strapieno-right-menu route="{{route}}" ></strapieno-right-menu>
                 </paper-scroll-header-panel>
-                <paper-scroll-header-panel main>
-                  <strapieno-router
-                    auth="{{auth}}"
-                    route="{{route}}"
-                    route-params="{{routeParams}}">
-                  </strapieno-router>
-                </paper-scroll-header-panel>
+                <div main>
+                    <paper-drawer-panel id="paperDrawerPanel" drawer-width="200px" class="collapsed-menu">
+                        <paper-scroll-header-panel drawer selected>
+                            <strapieno-left-menu route="{{route}}" ></strapieno-left-menu>
+                        </paper-scroll-header-panel>
+                        <div main id="rightMain">
+                            <paper-scroll-header-panel>
+                                <strapieno-router
+                                        auth="{{auth}}"
+                                        route="{{route}}"
+                                        route-params="{{routeParams}}">
+                                </strapieno-router>
+                            </paper-scroll-header-panel>
+                        </div>
+                    </paper-drawer-panel>
+                </div>
             </paper-drawer-panel>
         </paper-scroll-header-panel>
     </template>

@@ -20,11 +20,42 @@
     <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
       <section data-route="dashboard">
-        <h1>test</h1>
-        <span>home</span>
+      </section>
+
+      <section data-route="user-add">
+        <form
+          id="userAddForm"
+          is="apigility-rest-form"
+          service-name="rest/user"
+          custom-validation="{{validatePostUser}}"
+          auth="{{auth}}">
+          <paper-input name="user_name" label="Username"></paper-input>
+          <paper-input name="email" label="Email"></paper-input>
+          <paper-input name="first_name" label="First name"></paper-input>
+          <paper-input name="last_name" label="Last name"></paper-input>
+          <paper-input name="last_name" label="Last name"></paper-input>
+          <paper-input name="password" type="password" label="Password"></paper-input>
+          <paper-input name="confirm_password" type="password" label="Confirm passord"></paper-input>
+          <paper-input name="birth_date" type="date" label="Birth date"></paper-input>
+          <dropdown-menu-input name="role_id" label="Role">
+            <paper-menu class="dropdown-content" class="flex hspace" attr-for-selected="value">
+              <paper-item value="guest">Guest</paper-item>
+              <paper-item value="god">God</paper-item>
+            </paper-menu>
+          </dropdown-menu-input>
+          <div class="layout horizontal end-justified">
+            <paper-button submit-button raised>Create</paper-button>
+          </div>
+          </paper-menu>
+        </form>
       </section>
       <!-- List user -->
       <section data-route="users">
+        <div class="layout horizontal end-justified">
+          <a href="/user/add">
+            <paper-fab icon="add" title="heart"></paper-fab>
+          </a>
+        </div>
         <apigility-rest
                 service-name="rest/user"
                 collection-name="users"
@@ -38,7 +69,8 @@
         <paper-datatable data="{{users}}">
           <paper-datatable-column header="Username" property="user_name" type="String" sortable></paper-datatable-column>
           <paper-datatable-column header="Email" property="email" type="String" sortable></paper-datatable-column>
-          <paper-datatable-column header="Data create" property="date_created" type="date" sortable></paper-datatable-column>
+          <paper-datatable-column header="Created" property="date_created" type="date" sortable></paper-datatable-column>
+          <paper-datatable-column header="Last modify" property="date_created" type="date" sortable></paper-datatable-column>
           <paper-datatable-column property="id" type="String">
             <template>
               <a href="http://localhost:5000/user/{{value}}">
@@ -47,7 +79,6 @@
             </template>
           </paper-datatable-column>
         </paper-datatable>
-
         <rest-pagination
           page-count="{{usersPages}}"
           page="{{userPage}}"
@@ -60,17 +91,28 @@
           is="apigility-rest-form"
           service-name="rest/user"
           identify="{{userId}}"
+          update-method="PATCH"
           auth="{{auth}}">
           <paper-input name="user_name" label="Username"></paper-input>
           <paper-input name="email" label="Email"></paper-input>
           <paper-input name="first_name" label="First name"></paper-input>
           <paper-input name="last_name" label="Last name"></paper-input>
-          <input type="submit" value="Save"/>
+          <paper-input name="last_name" label="Last name"></paper-input>
+          <paper-input name="birth_date" type="date" label="Birth date"></paper-input>
+          <dropdown-menu-input name="role_id" label="Role">
+            <paper-menu class="dropdown-content" class="flex hspace" attr-for-selected="value">
+              <paper-item value="guest">Guest</paper-item>
+              <paper-item value="god">God</paper-item>
+            </paper-menu>
+          </dropdown-menu-input>
+          <div class="layout horizontal end-justified">
+            <paper-button submit-button raised>SAVE</paper-button>
+          </div>
+          </paper-menu>
         </form>
       </section>
       <!-- List place -->
       <section data-route="places">
-        fsdfsdfasdf
         <apigility-rest
           service-name="rest/nightclub"
           collection-name="nightclubs"
@@ -81,19 +123,19 @@
           auth="{{auth}}"
           load-collection="{{loadPlaceCollection}}">
         </apigility-rest>
-        <table class="paper-datatable">
-          <tbody class="paper-datatable">
-          <template is="dom-repeat" items="{{nightclubs}}" as="nightclub" >
-            <tr class="paper-datatable">
-              <td class="paper-datatable">
-                <a href="http://localhost:5000/place/{{nightclub.id}}">
-                 <span>{{nightclub.name}}</span>
-                </a>
-              </td>
-            </tr>
-          </template>
-          </tbody>
-        </table>
+        <paper-datatable data="{{nightclubs}}">
+          <paper-datatable-column header="Name" property="name" type="String" sortable></paper-datatable-column>
+          <paper-datatable-column header="Type" property="type" type="String" sortable></paper-datatable-column>
+          <paper-datatable-column header="Created" property="date_created" type="date" sortable></paper-datatable-column>
+          <paper-datatable-column header="Last modify" property="date_created" type="date" sortable></paper-datatable-column>
+          <paper-datatable-column property="id" type="String">
+            <template>
+              <a href="http://localhost:5000/place/{{value}}">
+                <paper-icon-button icon="datatable:editable"></paper-icon-button>
+              </a>
+            </template>
+          </paper-datatable-column>
+        </paper-datatable>
         <rest-pagination
           page-count="{{nightclubPages}}"
           page="{{nightclubPage}}"
@@ -106,12 +148,22 @@
           is="apigility-rest-form"
           service-name="rest/nightclub"
           identify="{{placeId}}"
+          update-method="PATCH"
           auth="{{auth}}">
-          <input type="submit" value="Save"/>
+          <paper-input name="name" label="Name"></paper-input>
+          <paper-input name="fax_number" label="Fax number"></paper-input>
+          <paper-input name="telephone" label="Telephone"></paper-input>
+
+          <div class="layout horizontal end-justified">
+            <paper-button raised>SAVE</paper-button>
+          </div>
         </form>
 
       </section>
-
+      <!-- List user -->
+      <section data-route="profile">
+        POPOLARE
+      </section>
       <section data-route="not-found">
        not found
       </section>
@@ -166,25 +218,31 @@
           }
         },
 
+        ready: function () {
+          console.log('USER ADD', this.$.userAddForm);
+          var formUserAdd = this.$.userAddForm;
+          formUserAdd.addEventListener('apigility-rest-form-presubmit', function () {console.log('dai cazzo')});
+        },
+
         _routeParamsChanged:  function (value) {
           switch(value.routeName) {
             case 'dashboard':
-              console.log('dashboard bl');
+              console.log('ROUTER dashboard');
               break;
             case 'users':
-              console.log('Users bl');
+              console.log('ROUTER users');
               this.loadUserCollection = true;
               break;
             case 'user':
-              console.log('User bl');
+              console.log('ROUTER user');
               this.userId = value.params.userId;
               break;
             case 'places':
-              console.log('place bl');
+              console.log('ROUTER place');
               this.loadPlaceCollection = true;
               break;
             case 'place':
-              console.log('place bl');
+              console.log('ROUTER place');
               this.placeId = value.params.placeId;
               break;
             default:

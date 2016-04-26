@@ -21,6 +21,27 @@
     /**
      * List user
      */
+    page('/user/add', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'add-user');
+      app.route = ctx.routeName =  'user-add';
+      app.routeParams = ctx;
+
+      var form = document.getElementById('userAddForm');
+      form.$.restClient.addEventListener(
+              'rest-iron-ajax-post-response',
+              function(e) {
+                var id = e.detail.restClient.entity.id;
+                console.log( window.location.href.replace("add", id));
+                window.location.href = window.location.href.replace("add", id);
+              }
+      );
+
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * List user
+     */
     page('/user', scrollToTop, function(ctx) {
       console.log('ROUTING', 'users');
       app.route = ctx.routeName =  'users';
@@ -53,6 +74,17 @@
      */
     page('/place/:placeId', scrollToTop, function(ctx) {
       console.log('ROUTING', 'place');
+      app.route = ctx.routeName =  'place';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Place
+     */
+    page('/profile', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'profile');
+      console.log('ROUTING AUTH', app.auth);
       app.route = ctx.routeName =  'place';
       app.routeParams = ctx;
       app.notifyPath('routeParams', ctx);

@@ -7,8 +7,7 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.6",
     "polymer-apigility": "git@github.com:visa4/polymer-apigility.git#develop  ",
     "page": "page.js#~1.7.1",
-    "paper-datatable": "~0.9.8",
-    "vaadin-grid": "~1.0.0"
+    "paper-datatable": "~0.9.8"
   },
   "devDependencies": {
     "web-component-tester": "*",

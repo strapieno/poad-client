@@ -26,13 +26,14 @@
       app.route = ctx.routeName =  'user-add';
       app.routeParams = ctx;
 
-      var form = document.getElementById('userAddForm');
+      var page = document.getElementById('addUserPage');
+      var form = Polymer.dom(page).node.$.userAddForm;
       form.$.restClient.addEventListener(
               'rest-iron-ajax-post-response',
               function(e) {
                 var id = e.detail.restClient.entity.id;
-                console.log( window.location.href.replace("add", id));
-                window.location.href = window.location.href.replace("add", id);
+                // TODO reviwe params
+                window.history.pushState("object or string", "Title", window.location.href.replace("add", id));
               }
       );
 
@@ -69,6 +70,28 @@
       app.notifyPath('routeParams', ctx);
     });
 
+
+    /**
+     * Add place
+     */
+    page('/place/add', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'place add');
+      app.route = ctx.routeName =  'place-add';
+      app.routeParams = ctx;
+      app.notifyPath('routeParams', ctx);
+
+      var page = document.getElementById('addPlacePage');
+      var form = Polymer.dom(page).node.$.placeUpsert;
+      form.$.restClient.addEventListener(
+              'rest-iron-ajax-post-response',
+              function(e) {
+                var id = e.detail.restClient.entity.id;
+                // TODO reviwe params
+                window.history.pushState("object or string", "Title", window.location.href.replace("add", id));
+              }
+      );
+    });
+
     /**
      * Place
      */
@@ -79,19 +102,102 @@
       app.notifyPath('routeParams', ctx);
     });
 
+
     /**
-     * Place
+     * List review
+     */
+    page('/place/:placeId/review', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'reviews');
+      app.route = ctx.routeName =  'reviews';
+      app.routeParams = ctx;
+
+      // TODO check if placeId exist also not-found
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Add review
+     */
+    page('/place/:placeId/review/add', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'add-reviews');
+      app.route = ctx.routeName =  'add-review';
+      app.routeParams = ctx;
+
+      // TODO check if placeId exist also not-found
+      app.notifyPath('routeParams', ctx);
+
+      var page = document.getElementById('addPlaceReviewPage');
+      var form = Polymer.dom(page).node.$.reviewUpsert;
+      form.$.restClient.addEventListener(
+              'rest-iron-ajax-post-response',
+              function(e) {
+                var id = e.detail.restClient.entity.id;
+                // TODO reviwe params
+                window.history.pushState("object or string", "Title", window.location.href.replace("add", id));
+              }
+      );
+    });
+
+    /**
+     * review
+     */
+    page('/place/:placeId/review/:reviewId', scrollToTop, function(ctx) {
+      console.log('ROUTING', 'review');
+      app.route = ctx.routeName =  'review';
+      app.routeParams = ctx;
+
+      // TODO check if placeId exist also not-found
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Girl
+     */
+    page('/place/:placeId/girl', scrollToTop, function(ctx) {
+      //console.log('ROUTING', 'girls');
+      app.route = ctx.routeName =  'girls';
+      app.routeParams = ctx;
+
+      // TODO check if placeId exist also not-found
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Girl
+     */
+    page('/place/:placeId/girl/add', scrollToTop, function(ctx) {
+      //console.log('ROUTING', 'girls');
+      app.route = ctx.routeName =  'add-girl';
+      app.routeParams = ctx;
+
+      // TODO check if placeId exist also not-found
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Girl
+     */
+    page('/place/:placeId/girl/:girlId', scrollToTop, function(ctx) {
+      //console.log('ROUTING', 'girl');
+      app.route = ctx.routeName =  'girl';
+      app.routeParams = ctx;
+
+      // TODO check if placeId exist also not-found
+      app.notifyPath('routeParams', ctx);
+    });
+
+    /**
+     * Profile
      */
     page('/profile', scrollToTop, function(ctx) {
-      console.log('ROUTING', 'profile');
-      console.log('ROUTING AUTH', app.auth);
-      app.route = ctx.routeName =  'place';
+      //console.log('ROUTING', 'profile');
+      app.route = ctx.routeName =  'profile';
       app.routeParams = ctx;
       app.notifyPath('routeParams', ctx);
     });
 
     page('*', scrollToTop, function(ctx) {
-      console.log('ROUTING', 'not-found');
+      //console.log('ROUTING', 'not-found');
       app.route = ctx.routeName =  'not-found';
       app.routeParams = ctx;
       app.notifyPath('routeParams', ctx);

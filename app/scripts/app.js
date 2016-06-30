@@ -4,6 +4,14 @@
 (function(document) {
   'use strict';
 
+  // TODO move into another file
+  app.cnf = {
+    "client_id": "strapieno-admin",
+    "base-url-rest" : "http://127.0.0.69/rest",
+    "base-url" : "http://127.0.0.69",
+    "google-map-api-key": "AIzaSyAqDcu1vu9rj_Fj-3qCxFKbwdozZFGZOOE"
+  };
+
   /**
    * Slide left menu
    */
@@ -31,11 +39,18 @@
    */
    app.logout = function() {
     var rightMenu = document.querySelector('strapieno-right-menu');
-    rightMenu.addEventListener('logout', function (e) {
-      var auth = document.querySelector('apigility-auth');
-      auth.logout();
-    });
+    if (rightMenu) {
+     rightMenu.addEventListener('logout', function (e) {
+         var auth = document.querySelector('apigility-auth-service');
+         auth.logout();
+       });
+     } else {
+       console.warn('strapieno-right-menu not found');
+     }
+
   };
+
+  var tt = document.querySelector('#addUserPage strapieno-right-menu');
 
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
@@ -56,17 +71,4 @@
     }
   );
 
-  /*
-  // Import formatter
-  if (Strapieno.Formatter) {
-
-    Object.keys(Strapieno.Formatter).forEach(function(key) {
-      this[key] = Strapieno.Formatter[key];
-    }.bind(app));
-  };
-    app.testR = function (data) {
-        var date = new Date(data);
-        return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-    };
-  */
 })(document);

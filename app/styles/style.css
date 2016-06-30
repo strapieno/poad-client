@@ -1,6 +1,8 @@
 html, body {
     height: 100%;
     margin: 0;
+    font-family: 'Roboto', 'Noto', sans-serif;
+
 }
 paper-scroll-header-panel {
     height: 100%;
@@ -13,4 +15,12 @@ paper-toolbar #topBar {
 
 strapieno-user-avatar#logged-avatar {
     cursor: pointer;
+}
+
+.height100 {
+    height: 100%;
+}
+
+.text-align-center {
+    text-align: center;
 }

@@ -4,73 +4,74 @@
     <meta charset="utf-8">
     <link rel="import" href="/elements/elements.html">
     <link rel="stylesheet" href="/styles/style.css">
-    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
 </head>
 <body>
 
 <span id="browser-sync-binding"></span>
 <template is="dom-bind" id="app">
 
-    <iron-meta type="apigility" key="root-url" value="http://127.0.0.69"></iron-meta>
+    <iron-meta type="apigility" key="root-url" value="{{cnf.base-url}}"></iron-meta>
+    <iron-meta type="apigility" key="base-url" value="{{cnf.base-url}}"></iron-meta>
     <iron-meta type="apigility" key="content-type" value="application/json"></iron-meta>
     <iron-meta type="apigility" key="headers" value='{"Accept": "application/json"}'></iron-meta>
-    <apigility-auth
+    <apigility-auth-service
             auth="{{auth}}"
             identity-object="{{identityObject}}"
             oauth-service="oauth"
-            identity-object-service="rpc/identity"
-            client-id="strapieno-admin" >
-    </apigility-auth>
-
-    <template is="dom-if" if="[[!auth]]">
-        <div class="layout horizontal center-justified ">
-            <div class="layout vertical center-justified ">
-                <span>Strapieno login</span>
-                <paper-card id="login-box">
-                    <div class="card-content">
-                        <form is="apigility-auth-form" error-message="{{errorMessage}}">
-                            <span>{{errorMessage}}</span>
-                            <paper-input name="username" label="User name" ></paper-input>
-                            <paper-input type="password" name="password" label="Password" ></paper-input>
-                            <input type="submit" value="ok">
-                        </form>
-                    </div>
-                </paper-card>
-            </div>
-        </div>
-    </template>
-    <template is="dom-if" if="[[auth]]">
-        <paper-scroll-header-panel fixed>
-            <paper-toolbar>
-                <paper-icon-button icon="menu" on-tap="toggleMenu"></paper-icon-button>
-                <div class="flex"></div>
-                <strapieno-user-avatar id="logged-avatar" on-tap="toggleRightMenu" user="{{identityObject}}" height="38" width="38" sizing="cover" placeholder="/images/avatar35x35.png"></strapieno-user-avatar>
-            </paper-toolbar>
-            <paper-drawer-panel id="rightPanel" drawer-width="64px" force-narrow right-drawer>
-                <paper-scroll-header-panel drawer>
-                    <strapieno-right-menu route="{{route}}" ></strapieno-right-menu>
-                </paper-scroll-header-panel>
-                <div main>
-                    <paper-drawer-panel id="paperDrawerPanel" drawer-width="200px" class="collapsed-menu">
-                        <paper-scroll-header-panel drawer selected>
-                            <strapieno-left-menu route="{{route}}" ></strapieno-left-menu>
-                        </paper-scroll-header-panel>
-                        <div main id="rightMain">
-                            <paper-scroll-header-panel>
-                                <strapieno-router
-                                        auth="{{auth}}"
-                                        route="{{route}}"
-                                        route-params="{{routeParams}}">
-                                </strapieno-router>
-                            </paper-scroll-header-panel>
+            identity-service="rpc/identity"
+                client-id="strapieno-admin" >
+    </apigility-auth-service>
+    <!-- Login section -->
+    <div hidden="{{auth}}" class="layout horizontal center-justified height100">
+        <div class="layout vertical center-justified">
+            <span class="text-align-center">Strip advisor login</span>
+            <paper-card id="login-box" elevation="1">
+                <div class="card-content">
+                    <form is="a-apigility-auth-form" error-message="{{errorMessage}}">
+                        <span>{{errorMessage}}</span>
+                        <paper-input name="username" label="User name" ></paper-input>
+                        <paper-input type="password" name="password" label="Password" ></paper-input>
+                        <div class="layout horizontal end-justified">
+                            <paper-button submit-button>Login</paper-button>
                         </div>
-                    </paper-drawer-panel>
+                    </form>
                 </div>
-            </paper-drawer-panel>
-        </paper-scroll-header-panel>
-    </template>
+            </paper-card>
+        </div>
+    </div>
+    <paper-scroll-header-panel hidden="{{!auth}}" fixed>
+        <paper-toolbar>
+            <paper-icon-button icon="menu" on-tap="toggleMenu"></paper-icon-button>
+            <div class="flex"><h3>Strapieno admin</h3></div>
+            <strapieno-user-avatar id="logged-avatar" on-tap="toggleRightMenu" user="[[identityObject]]" height="38" width="38" sizing="cover" placeholder="/images/avatar35x35.png"></strapieno-user-avatar>
+        </paper-toolbar>
+        <paper-drawer-panel id="rightPanel" drawer-width="64px" force-narrow right-drawer>
+            <paper-scroll-header-panel drawer>
+                <strapieno-right-menu route="{{route}}" ></strapieno-right-menu>
+            </paper-scroll-header-panel>
+            <div main>
+                <paper-drawer-panel id="paperDrawerPanel" drawer-width="200px" class="collapsed-menu">
+                    <paper-scroll-header-panel drawer selected>
+                        <strapieno-left-menu route="{{route}}" ></strapieno-left-menu>
+                    </paper-scroll-header-panel>
+                    <div main id="rightMain">
+                        <paper-scroll-header-panel>
+                            <strapieno-router
+                                    auth="[[auth]]"
+                                    maps-api-key="{{cnf.google-map-api-key}}"
+                                    identity-object="[[identityObject]]"
+                                    route="{{route}}"
+                                    route-params="{{routeParams}}">
+                            </strapieno-router>
+                        </paper-scroll-header-panel>
+                    </div>
+                </paper-drawer-panel>
+            </div>
+        </paper-drawer-panel>
+    </paper-scroll-header-panel>
 </template>
-<script src="../bower_components/page/page.js"></script>
+<script src="/bower_components/page/page.js"></script>
 <script src="/scripts/app.js"></script>
 </body>
 </html>

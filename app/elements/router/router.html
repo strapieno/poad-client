@@ -1,5 +1,4 @@
 <link rel="import" href="../routing.html">
-<link rel="import" href="../formatter-behavior.html">
 
 <dom-module id="strapieno-router">
   <template>
@@ -16,153 +15,100 @@
         }
       }
     </style>
-
     <iron-pages attr-for-selected="data-route" selected="{{route}}">
-
+      <!-- Home page -->
       <section data-route="dashboard">
-      </section>
 
-      <section data-route="user-add">
-        <form
-          id="userAddForm"
-          is="apigility-rest-form"
-          service-name="rest/user"
-          custom-validation="{{validatePostUser}}"
-          auth="{{auth}}">
-          <paper-input name="user_name" label="Username"></paper-input>
-          <paper-input name="email" label="Email"></paper-input>
-          <paper-input name="first_name" label="First name"></paper-input>
-          <paper-input name="last_name" label="Last name"></paper-input>
-          <paper-input name="last_name" label="Last name"></paper-input>
-          <paper-input name="password" type="password" label="Password"></paper-input>
-          <paper-input name="confirm_password" type="password" label="Confirm passord"></paper-input>
-          <paper-input name="birth_date" type="date" label="Birth date"></paper-input>
-          <dropdown-menu-input name="role_id" label="Role">
-            <paper-menu class="dropdown-content" class="flex hspace" attr-for-selected="value">
-              <paper-item value="guest">Guest</paper-item>
-              <paper-item value="god">God</paper-item>
-            </paper-menu>
-          </dropdown-menu-input>
-          <div class="layout horizontal end-justified">
-            <paper-button submit-button raised>Create</paper-button>
-          </div>
-          </paper-menu>
-        </form>
       </section>
       <!-- List user -->
       <section data-route="users">
-        <div class="layout horizontal end-justified">
-          <a href="/user/add">
-            <paper-fab icon="add" title="heart"></paper-fab>
-          </a>
-        </div>
-        <apigility-rest
-                service-name="rest/user"
-                collection-name="users"
-                collection="{{users}}"
-                page-count="{{usersPages}}"
-                page-size="[[userPageSize]]"
-                page="[[userPage]]"
-                auth="{{auth}}"
+        <strapieno-user-get-all
+                auth="[[auth]]"
                 load-collection="{{loadUserCollection}}">
-        </apigility-rest>
-        <paper-datatable data="{{users}}">
-          <paper-datatable-column header="Username" property="user_name" type="String" sortable></paper-datatable-column>
-          <paper-datatable-column header="Email" property="email" type="String" sortable></paper-datatable-column>
-          <paper-datatable-column header="Created" property="date_created" type="date" sortable></paper-datatable-column>
-          <paper-datatable-column header="Last modify" property="date_created" type="date" sortable></paper-datatable-column>
-          <paper-datatable-column property="id" type="String">
-            <template>
-              <a href="http://localhost:5000/user/{{value}}">
-                <paper-icon-button icon="datatable:editable"></paper-icon-button>
-              </a>
-            </template>
-          </paper-datatable-column>
-        </paper-datatable>
-        <rest-pagination
-          page-count="{{usersPages}}"
-          page="{{userPage}}"
-          page-size="{{userPageSize}}">
-        </rest-pagination>
+        </strapieno-user-get-all>
+      </section>
+      <!-- Add user -->
+      <section data-route="user-add">
+        <strapieno-user-post
+                auth="[[auth]]"
+                id="addUserPage">
+        </strapieno-user-post>
       </section>
       <!-- User -->
       <section data-route="user">
-        <form
-          is="apigility-rest-form"
-          service-name="rest/user"
-          identify="{{userId}}"
-          update-method="PATCH"
-          auth="{{auth}}">
-          <paper-input name="user_name" label="Username"></paper-input>
-          <paper-input name="email" label="Email"></paper-input>
-          <paper-input name="first_name" label="First name"></paper-input>
-          <paper-input name="last_name" label="Last name"></paper-input>
-          <paper-input name="last_name" label="Last name"></paper-input>
-          <paper-input name="birth_date" type="date" label="Birth date"></paper-input>
-          <dropdown-menu-input name="role_id" label="Role">
-            <paper-menu class="dropdown-content" class="flex hspace" attr-for-selected="value">
-              <paper-item value="guest">Guest</paper-item>
-              <paper-item value="god">God</paper-item>
-            </paper-menu>
-          </dropdown-menu-input>
-          <div class="layout horizontal end-justified">
-            <paper-button submit-button raised>SAVE</paper-button>
-          </div>
-          </paper-menu>
-        </form>
+        <strapieno-user-put
+                auth="[[auth]]"
+                user-id="[[userId]]">
+        </strapieno-user-put>
       </section>
       <!-- List place -->
       <section data-route="places">
-        <apigility-rest
-          service-name="rest/nightclub"
-          collection-name="nightclubs"
-          collection="{{nightclubs}}"
-          page-count="{{nightclubPages}}"
-          page-size="[[nightclubPageSize]]"
-          page="[[nightclubPage]]"
-          auth="{{auth}}"
-          load-collection="{{loadPlaceCollection}}">
-        </apigility-rest>
-        <paper-datatable data="{{nightclubs}}">
-          <paper-datatable-column header="Name" property="name" type="String" sortable></paper-datatable-column>
-          <paper-datatable-column header="Type" property="type" type="String" sortable></paper-datatable-column>
-          <paper-datatable-column header="Created" property="date_created" type="date" sortable></paper-datatable-column>
-          <paper-datatable-column header="Last modify" property="date_created" type="date" sortable></paper-datatable-column>
-          <paper-datatable-column property="id" type="String">
-            <template>
-              <a href="http://localhost:5000/place/{{value}}">
-                <paper-icon-button icon="datatable:editable"></paper-icon-button>
-              </a>
-            </template>
-          </paper-datatable-column>
-        </paper-datatable>
-        <rest-pagination
-          page-count="{{nightclubPages}}"
-          page="{{nightclubPage}}"
-          page-size="{{nightclubPageSize}}">
-        </rest-pagination>
+        <strapieno-place-get-all
+                auth="[[auth]]"
+                load-collection="{{loadPlaceCollection}}">
+        </strapieno-place-get-all>
       </section>
       <!-- Place -->
       <section data-route="place">
-        <form
-          is="apigility-rest-form"
-          service-name="rest/nightclub"
-          identify="{{placeId}}"
-          update-method="PATCH"
-          auth="{{auth}}">
-          <paper-input name="name" label="Name"></paper-input>
-          <paper-input name="fax_number" label="Fax number"></paper-input>
-          <paper-input name="telephone" label="Telephone"></paper-input>
-
-          <div class="layout horizontal end-justified">
-            <paper-button raised>SAVE</paper-button>
-          </div>
-        </form>
-
+        <strapieno-place-put
+                auth="[[auth]]"
+                place-id="[[placeId]]"
+                api-key="{{mapsApiKey}}">
+        </strapieno-place-put>
       </section>
-      <!-- List user -->
+      <!-- Add Place -->
+      <section data-route="place-add">
+        <strapieno-place-post
+                auth="[[auth]]"
+                id="addPlacePage"
+                api-key="{{mapsApiKey}}">
+        </strapieno-place-post>
+      </section>
+      <!-- Profile -->
       <section data-route="profile">
-        POPOLARE
+        <strapieno-user-put
+                auth="[[auth]]"
+                user-id="[[identityObject.id]]"
+                identity-object="{{identityObject}}">
+        </strapieno-user-put>
+      </section>
+      <!-- List reviews -->
+      <section data-route="reviews">
+        <strapieno-place-review-get-all
+                auth="[[auth]]"
+                place-id="[[placeId]]"
+                load-collection="{{loadPlaceReviewCollection}}">
+        </strapieno-place-review-get-all>
+      </section>
+      <section data-route="add-review">
+        <strapieno-place-review-post
+                auth="[[auth]]"
+                id="addPlaceReviewPage"
+                place-id="[[placeId]]">
+        </strapieno-place-review-post>
+      </section>
+      <section data-route="review">
+        <strapieno-place-review-put
+                auth="[[auth]]"
+                place-id="[[placeId]]"
+                review-id="[[reviewId]]">
+        </strapieno-place-review-put>
+      </section>
+      <section data-route="girls">
+        <strapieno-place-girl-get-all
+                auth="[[auth]]"
+                place-id="[[placeId]]"
+                load-collection="{{loadPlaceGirlCollection}}">
+        </strapieno-place-girl-get-all>
+      </section>
+      <section data-route="add-girl">
+        <strapieno-place-girl-post
+                auth="[[auth]]"
+                place-id="[[placeId]]">
+        </strapieno-place-girl-post>
+      </section>
+      <section data-route="girl">
+
       </section>
       <section data-route="not-found">
        not found
@@ -179,15 +125,6 @@
         is: 'strapieno-router',
 
         properties: {
-          entityId: {
-            type: String,
-            value: null
-          },
-
-          auth: {
-            type: Object,
-            value: null
-          },
 
           route: {
             type: String
@@ -215,13 +152,15 @@
 
           placeId: {
             type: String
-          }
-        },
+          },
 
-        ready: function () {
-          console.log('USER ADD', this.$.userAddForm);
-          var formUserAdd = this.$.userAddForm;
-          formUserAdd.addEventListener('apigility-rest-form-presubmit', function () {console.log('dai cazzo')});
+          reviewId: {
+            type: String
+          },
+
+          girlId: {
+            type: String
+          }
         },
 
         _routeParamsChanged:  function (value) {
@@ -244,6 +183,32 @@
             case 'place':
               console.log('ROUTER place');
               this.placeId = value.params.placeId;
+              break;
+            case 'reviews':
+              console.log('ROUTER reviews');
+              this.placeId = value.params.placeId;
+              this.loadPlaceReviewCollection = true;
+              break;
+            case 'add-review':
+              console.log('ROUTER add-review');
+              this.placeId = value.params.placeId;
+              break;
+            case 'review':
+              console.log('ROUTER add-review');
+              this.placeId = value.params.placeId;
+              this.reviewId = value.params.reviewId;
+              break;
+            case 'girls':
+              this.placeId = value.params.placeId;
+              this.loadPlaceGirlCollection = true;
+              break;
+            case 'add-girlbuiu':
+              this.placeId = value.params.placeId;
+              this.girlId = value.params.girlId;
+              break;
+            case 'girl':
+              this.placeId = value.params.placeId;
+              this.girlId = value.params.girlId;
               break;
             default:
               break;

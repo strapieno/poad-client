@@ -28,15 +28,15 @@
 
       var page = document.getElementById('addUserPage');
       var form = Polymer.dom(page).node.$.userAddForm;
-      form.$.restClient.addEventListener(
-              'rest-iron-ajax-post-response',
-              function(e) {
-                var id = e.detail.restClient.entity.id;
-                // TODO reviwe params
-                window.history.pushState("object or string", "Title", window.location.href.replace("add", id));
-              }
-      );
 
+      var listenerPostUser =  function(e) {
+        this.page.show(window.location.pathname.replace("add", e.detail.restClient.entity.id));
+      }.bind(this);
+
+      form.$.restClient.addEventListener(
+              'rest-post-response',
+              listenerPostUser
+      );
       app.notifyPath('routeParams', ctx);
     });
 
@@ -82,13 +82,14 @@
 
       var page = document.getElementById('addPlacePage');
       var form = Polymer.dom(page).node.$.placeUpsert;
+
+      var listenerPostNightClub =  function(e) {
+        this.page.show(window.location.pathname.replace("add", e.detail.restClient.entity.id));
+      }.bind(this);
+
       form.$.restClient.addEventListener(
-              'rest-iron-ajax-post-response',
-              function(e) {
-                var id = e.detail.restClient.entity.id;
-                // TODO reviwe params
-                window.history.pushState("object or string", "Title", window.location.href.replace("add", id));
-              }
+              'rest-post-response',
+              listenerPostNightClub
       );
     });
 
@@ -127,15 +128,17 @@
       app.notifyPath('routeParams', ctx);
 
       var page = document.getElementById('addPlaceReviewPage');
-      var form = Polymer.dom(page).node.$.reviewUpsert;
+      var form = Polymer.dom(page).node.$.reviewPost;
+
+      var listenerPostNightClubReview =  function(e) {
+        this.page.show(window.location.pathname.replace("add", e.detail.restClient.entity.id));
+      }.bind(this);
+
       form.$.restClient.addEventListener(
-              'rest-iron-ajax-post-response',
-              function(e) {
-                var id = e.detail.restClient.entity.id;
-                // TODO reviwe params
-                window.history.pushState("object or string", "Title", window.location.href.replace("add", id));
-              }
+              'rest-post-response',
+              listenerPostNightClubReview
       );
+      app.notifyPath('routeParams', ctx);
     });
 
     /**

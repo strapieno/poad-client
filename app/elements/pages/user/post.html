@@ -49,6 +49,14 @@
                     }
                 },
 
+                listeners: {
+                    'rest-post-response': 'userNotificationListener'
+                },
+
+                userNotificationListener: function (event) {
+                    this.fire('iron-signal', {name: 'notification', data: {entity: this.entity, type: 'user', method: 'POST'}});
+                },
+
                 ready: function () {
                     var formUserAdd = this.$.userAddForm;
                     formUserAdd.addEventListener('apigility-rest-form-presubmit', this.userPostValidation);

@@ -22,24 +22,29 @@
                 auto-load="{{loadCollection}}">
             <apigility-resource resource-name="rest/nightclub"></apigility-resource>
         </apigility-rest-api-client>
-        <paper-datatable data="{{nightclubs}}">
-            <paper-datatable-column header="Name" property="name" type="String" sortable></paper-datatable-column>
-            <paper-datatable-column header="Type" property="type" type="String" sortable></paper-datatable-column>
-            <paper-datatable-column header="Created" property="date_created" type="date" sortable></paper-datatable-column>
-            <paper-datatable-column header="Last modify" property="date_created" type="date" sortable></paper-datatable-column>
-            <paper-datatable-column property="id" type="String">
-                <template>
-                    <a href="/place/{{value}}">
-                        <paper-icon-button icon="datatable:editable"></paper-icon-button>
-                    </a>
-                </template>
-            </paper-datatable-column>
-        </paper-datatable>
-        <rest-pagination
-                page-count="{{nightclubPages}}"
-                page="{{nightclubPage}}"
-                page-size="{{nightclubPageSize}}">
-        </rest-pagination>
+        <template is="dom-if" if="{{hasCollection}}">
+            <paper-datatable data="{{nightclubs}}">
+                <paper-datatable-column header="Name" property="name" type="String" sortable></paper-datatable-column>
+                <paper-datatable-column header="Type" property="type" type="String" sortable></paper-datatable-column>
+                <paper-datatable-column header="Created" property="date_created" type="date" sortable></paper-datatable-column>
+                <paper-datatable-column header="Last modify" property="date_created" type="date" sortable></paper-datatable-column>
+                <paper-datatable-column property="id" type="String">
+                    <template>
+                        <a href="/place/{{value}}">
+                            <paper-icon-button icon="datatable:editable"></paper-icon-button>
+                        </a>
+                    </template>
+                </paper-datatable-column>
+            </paper-datatable>
+            <rest-pagination
+                    page-count="{{nightclubPages}}"
+                    page="{{nightclubPage}}"
+                    page-size="{{nightclubPageSize}}">
+            </rest-pagination>
+        </template>
+        <template is="dom-if" if="{{!hasCollection}}">
+           no place
+        </template>
     </template>
     <script>
         (function() {
@@ -52,7 +57,24 @@
                     loadCollection :{
                         type: Boolean,
                         value: false
+                    },
+
+                    hasCollection: {
+                        type: Boolean,
+                        value: false
                     }
+                },
+
+                observers: [
+                    '_collectionsChanged(nightclubs)'
+                ],
+
+                _collectionsChanged: function(nightclubs){
+                    if (Array.isArray(nightclubs) && nightclubs.length > 0) {
+                        this.hasCollection = true;
+                        return;
+                    }
+                    this.hasCollection = false;
                 }
             });
         })();

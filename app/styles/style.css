@@ -24,3 +24,21 @@ strapieno-user-avatar#logged-avatar {
 .text-align-center {
     text-align: center;
 }
+
+.error {
+    display: inline-block;
+    color: #dd2c00;
+    font-family: 'Roboto', 'Noto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.011em;
+    line-height: 20px;
+}
+
+#login-box {
+    min-width: 300px;
+}

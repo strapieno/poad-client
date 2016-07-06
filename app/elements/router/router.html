@@ -38,7 +38,8 @@
       <section data-route="user">
         <strapieno-user-put
                 auth="[[auth]]"
-                user-id="[[userId]]">
+                user-id="[[userId]]"
+                identity-object="[[identityObject]]">
         </strapieno-user-put>
       </section>
       <!-- List place -->
@@ -202,7 +203,7 @@
               this.placeId = value.params.placeId;
               this.loadPlaceGirlCollection = true;
               break;
-            case 'add-girlbuiu':
+            case 'add-girl':
               this.placeId = value.params.placeId;
               this.girlId = value.params.girlId;
               break;

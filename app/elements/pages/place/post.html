@@ -53,7 +53,19 @@
             'use strict';
 
             Polymer({
-                is: 'strapieno-place-post'
+                is: 'strapieno-place-post',
+
+                listeners: {
+                    'rest-post-response': 'userNotificationListener'
+                },
+
+                userNotificationListener: function (event) {
+                    this.fire(
+                        'iron-signal',
+                        {name: 'notification', data: {entity: this.entity, type: 'nightclub', method: 'POST'}}
+                    );
+                },
+
             });
         })();
     </script>

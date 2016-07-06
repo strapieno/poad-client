@@ -20,7 +20,7 @@
             identity-object="{{identityObject}}"
             oauth-service="oauth"
             identity-service="rpc/identity"
-                client-id="strapieno-admin" >
+            client-id="strapieno-admin" >
     </apigility-auth-service>
     <!-- Login section -->
     <div hidden="{{auth}}" class="layout horizontal center-justified height100">
@@ -28,8 +28,8 @@
             <span class="text-align-center">Strip advisor login</span>
             <paper-card id="login-box" elevation="1">
                 <div class="card-content">
-                    <form is="a-apigility-auth-form" error-message="{{errorMessage}}">
-                        <span>{{errorMessage}}</span>
+                    <form is="apigility-auth-form" error-message="{{pippo}}">
+                        <span class="error">{{pippo}}</span>
                         <paper-input name="username" label="User name" ></paper-input>
                         <paper-input type="password" name="password" label="Password" ></paper-input>
                         <div class="layout horizontal end-justified">
@@ -70,6 +70,8 @@
             </div>
         </paper-drawer-panel>
     </paper-scroll-header-panel>
+    <iron-signals on-iron-signal-notification="notificationListener"></iron-signals>
+    <paper-toast id="notificationToast"></paper-toast>
 </template>
 <script src="/bower_components/page/page.js"></script>
 <script src="/scripts/app.js"></script>

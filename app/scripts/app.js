@@ -61,6 +61,38 @@
     this.logout();
   };
 
+  app.notificationListener = function (event) {
+    var toast = document.getElementById('notificationToast');
+    switch (event.detail.type) {
+      case 'user' :
+        switch (event.detail.method.toUpperCase()) {
+          case 'POST' :
+            toast.text = 'User creation complete';
+            break;
+          case 'PATCH' :
+            toast.text = 'User update complete';
+            break;
+          default :
+            console.warn('Wrong config notification', event)
+        }
+        break;
+      case 'nightclub' :
+        switch (event.detail.method.toUpperCase()) {
+          case 'POST' :
+            toast.text = 'Nightclub creation complete';
+            break;
+          case 'PATCH' :
+            toast.text = 'Nightclub update complete';
+            break;
+          default :
+            console.warn('Wrong config notification', event)
+        }
+        break;
+      default :
+        console.warn('Wrong config notification', event)
+    }
+    toast.open();
+  },
   /**
    * Boot application
    */
